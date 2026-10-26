@@ -1,0 +1,1675 @@
+{
+  "name": "Encuesta Lenguajes",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.lenguaje_programacion.toLowerCase().trim() }}",
+                    "rightValue": "c#",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9a15a990-6ee3-422f-82dd-445a91e03cd4"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3dd01c90-4ecb-4a2b-ad06-3bcea0d55863",
+                    "leftValue": "={{ $json.lenguaje_programacion.toLowerCase().trim() }}",
+                    "rightValue": "c++",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "688f00f5-bc41-4ffd-9add-f43f95c778e5",
+                    "leftValue": "={{ $json.lenguaje_programacion.toLowerCase().trim() }}",
+                    "rightValue": "java",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f3b44e2a-85a9-452b-be5a-f3b547f81afe",
+                    "leftValue": "={{ $json.lenguaje_programacion.toLowerCase().trim() }}",
+                    "rightValue": "python",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "022c57f0-855e-4671-ac42-54850cc5287c",
+                    "leftValue": "={{ $json.lenguaje_programacion.toLowerCase().trim() }}",
+                    "rightValue": "javascript",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -480,
+        -1088
+      ],
+      "id": "0925058b-652c-407a-9df5-e7d1f6b74a8b",
+      "name": "Switch2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f5a5bb4f-f0f0-4514-9d32-9fba0ffdf8ec",
+              "leftValue": "={{ $json['¿Está satisfecho con el servicio?'] }}",
+              "rightValue": "No",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        -1072
+      ],
+      "id": "a26c6fa5-5a99-4677-a8e4-d0d78e5e27d9",
+      "name": "If Satisfaccion"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "¿Qué fue lo que no le gustó del servicio?",
+              "fieldType": "dropdown",
+              "fieldName": "motivo_no_satisfecho",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Tiempo de respuesta"
+                  },
+                  {
+                    "option": "Atención al cliente"
+                  },
+                  {
+                    "option": "Precio"
+                  },
+                  {
+                    "option": "Producto"
+                  },
+                  {
+                    "option": "Otro"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Comentario adicional para mejorar",
+              "fieldName": "comentario_no_satisfecho"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -784,
+        -1792
+      ],
+      "id": "ffefbd21-9818-4798-8985-c26928a346df",
+      "name": "Formulario de mejora",
+      "webhookId": "216c24bd-0a16-4fac-8f30-eb41af6f3603"
+    },
+    {
+      "parameters": {
+        "jsCode": "const workflowStaticData = $getWorkflowStaticData('global');\nif (!Array.isArray(workflowStaticData.noSatisfechos)) {\n  workflowStaticData.noSatisfechos = [];\n}\nworkflowStaticData.noSatisfechos.push({\n  motivo: $json.motivo_no_satisfecho || 'No especificado',\n  comentario: $json.comentario_no_satisfecho || '',\n  fecha: new Date().toISOString()\n});\nreturn [{\n  json: {\n    motivo_no_satisfecho: $json.motivo_no_satisfecho || 'No especificado',\n    comentario_no_satisfecho: $json.comentario_no_satisfecho || '',\n    total_no_satisfechos: workflowStaticData.noSatisfechos.length\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -1008
+      ],
+      "id": "c50a48c1-ce20-4769-8bee-5b4a2a2e2b55",
+      "name": "Guardar motivo"
+    },
+    {
+      "parameters": {
+        "formTitle": "Encuesta - Selección de modalidad",
+        "formDescription": "Antes de comenzar, cuéntanos cómo prefieres participar.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "¿Cómo deseas ingresar a la encuesta?",
+              "fieldType": "dropdown",
+              "fieldName": "modalidad",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Iniciar Sesion"
+                  },
+                  {
+                    "option": "Registrarse"
+                  },
+                  {
+                    "option": "Anonimo"
+                  }
+                ]
+              },
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -1248,
+        -1760
+      ],
+      "id": "f64fe5d0-eec4-477a-be42-258138c5d40c",
+      "name": "Inicio",
+      "webhookId": "b8ee68bf-e071-467f-86c6-02d90b9a5da3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ce856197-7a9c-4631-ab7c-c7080fc07770",
+              "name": "Lenguaje de Programacion",
+              "value": "=={{ $('Webhook').first().json.body.lenguaje_programacion || $('Webhook').first().json.body['Lenguaje de Programacion'] || 'Python' }}",
+              "type": "string"
+            },
+            {
+              "id": "caf02a7c-0599-4df4-9090-2792c30c0c2a",
+              "name": "Respuesta_1",
+              "value": "={{ $json.respuesta_1 || $('Webhook').first().json.body.respuesta_1 || $('Webhook').first().json.body['pregunta 1'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "4d84d8ac-e312-430a-b374-42e5a055bec8",
+              "name": "Respuesta_2",
+              "value": "={{ $json.respuesta_2 || $('Webhook').first().json.body.respuesta_2 || $('Webhook').first().json.body['pregunta 2'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "ad511f5d-50bc-452b-aba8-63cca7bc7236",
+              "name": "Respuesta_3",
+              "value": "={{ $json.respuesta_3 || $('Webhook').first().json.body.respuesta_3 || $('Webhook').first().json.body['pregunta 3'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "bc46a36a-0ecf-41d4-958c-99eb6d1f71cd",
+              "name": "Respuesta_4",
+              "value": "={{ $json.Respuesta_4 || $('Webhook').first().json.body.Respuesta_4 || $('Webhook').first().json.body['pregunta 4'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "cb8ea546-2cca-41f7-9359-670e305a20eb",
+              "name": "Respuesta_5",
+              "value": "={{ $json.respuesta_5 || $('Webhook').first().json.body.respuesta_5 || $('Webhook').first().json.body['pregunta 5'] || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        32,
+        -1072
+      ],
+      "id": "f76639cd-21c4-4ee4-8479-e32c6d64e063",
+      "name": "Consolidar_Respuestas"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "¡Respuestas guardadas con éxito!",
+        "completionMessage": "=<p style=\"font-size: 18px; color: #2e7d32;\"><strong>¡Tus respuestas han sido guardadas!</strong></p>\n<p style=\"font-size: 16px;\">Obtuviste <strong>{{ $('Calificar_Respuestas').first()?.json?.total_correctas ?? 0 }} de 5</strong> respuestas correctas en la evaluación sobre {{ $('Consolidar_Respuestas').first()?.json?.lenguaje_programacion || $('Consolidar_Respuestas').first()?.json['Lenguaje de Programacion'] }}.</p>",
+        "limitWaitTime": "={{ false }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -352,
+        -1920
+      ],
+      "id": "6176a1b3-a546-49ce-b643-ed2a04f459cf",
+      "name": "Form3",
+      "webhookId": "c5c75899-fea1-4ead-bc3d-37daad5c8f44"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Calificación NPS (1 al 10)",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Categoría del reporte",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "producto"
+                  },
+                  {
+                    "option": "atencion_cliente"
+                  },
+                  {
+                    "option": "facturacion"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "¿Está satisfecho con el servicio?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Si"
+                  },
+                  {
+                    "option": "No"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Comentarios o Sugerencias"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -704,
+        -1968
+      ],
+      "id": "91104157-45cc-4d91-a536-6f29c8ed4c80",
+      "name": "Form4",
+      "webhookId": "8314e807-a6b5-4148-989c-e8410df950ac"
+    },
+    {
+      "parameters": {
+        "tableId": "respuestas_encuesta",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "usuario_id",
+              "fieldValue": "={{ \n  (() => {\n    try {\n      if ($('HTTP Request Supabase Auth').isExecuted) {\n        return $('HTTP Request Supabase Auth').first().json.user?.id || null;\n      }\n    } catch(e) {}\n    \n    try {\n      if ($('HTTP Request Supabase Login').isExecuted) {\n        return $('HTTP Request Supabase Login').first().json.user?.id || null;\n      }\n    } catch(e) {}\n\n    return null;\n  })()\n}}"
+            },
+            {
+              "fieldId": "lenguaje_programacion",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json['Lenguaje de Programacion'] }}"
+            },
+            {
+              "fieldId": "respuesta_1",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json.Respuesta_1 }}"
+            },
+            {
+              "fieldId": "respuesta_2",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json.Respuesta_2 }}"
+            },
+            {
+              "fieldId": "respuesta_3",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json.Respuesta_3 }}"
+            },
+            {
+              "fieldId": "respuesta_4",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json.Respuesta_4 }}"
+            },
+            {
+              "fieldId": "respuesta_5",
+              "fieldValue": "={{ $('Consolidar_Respuestas').item.json.Respuesta_5 }}"
+            },
+            {
+              "fieldId": "nps",
+              "fieldValue": "={{ $json.nps || $json['Calificación NPS (1 al 10)'] || $json.NPS || '5' }}"
+            },
+            {
+              "fieldId": "categoria_reporte",
+              "fieldValue": "={{ $json.categoria_reporte || $json['Categoría del reporte'] || 'General' }}"
+            },
+            {
+              "fieldId": "satisfecho",
+              "fieldValue": "={{ $json.satisfecho || $json['¿Está satisfecho con el servicio?'] || 'Sí' }}"
+            },
+            {
+              "fieldId": "comentarios_sugerencias",
+              "fieldValue": "={{ $json.comentarios_sugerencias || $json['Comentarios o Sugerencias'] || '' }}"
+            },
+            {
+              "fieldId": "motivo_no_satisfecho",
+              "fieldValue": "={{ \n  (() => {\n    try {\n      if ($('Formulario de mejora').isExecuted) {\n        return $('Formulario de mejora').first().json.motivo_no_satisfecho || 'N/A';\n      }\n    } catch(e) {}\n    return 'N/A';\n  })()\n}}"
+            },
+            {
+              "fieldId": "comentario_no_satisfecho",
+              "fieldValue": "={{ \n  (() => {\n    try {\n      if ($('Formulario de mejora').isExecuted) {\n        return $('Formulario de mejora').first().json.comentario_no_satisfecho || '';\n      }\n    } catch(e) {}\n    return '';\n  })()\n}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -1120
+      ],
+      "id": "5910e3e5-2c19-4bf6-be02-3390bca4b975",
+      "name": "Supabase (Guardar Respuesta)1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "11GkgcN7ACMUZrLN",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1. Obtener respuestas consolidadas\nconst respuestas = $input.item.json;\n\n// 2. Intentar obtener las keywords desde el nodo de preguntas específico según el lenguaje\nlet datosPreguntas = {};\n\ntry {\n  const lenguaje = String(respuestas['Lenguaje de Programacion'] || '').toLowerCase();\n  \n  if (lenguaje.includes('python')) {\n    datosPreguntas = $('Questions_Python').first().json;\n  } else if (lenguaje.includes('javascript')) {\n    datosPreguntas = $('Questions_JavaScript').first().json;\n  } else if (lenguaje.includes('java')) {\n    datosPreguntas = $('Questions_Java').first().json;\n  } else if (lenguaje.includes('c++')) {\n    datosPreguntas = $('Questions_C++').first().json;\n  } else if (lenguaje.includes('c#')) {\n    datosPreguntas = $('Questions_C#').first().json;\n  } else {\n    datosPreguntas = $('Switch2').all()[0]?.json || {};\n  }\n} catch (e) {\n  datosPreguntas = {};\n}\n\nlet aciertos = 0;\nlet detalles = [];\n\nfor (let i = 1; i <= 5; i++) {\n  // Buscar campo respuesta_i o Respuesta_i\n  const claveRespuesta = Object.keys(respuestas).find(k => k.toLowerCase() === `respuesta_${i}`);\n  const userRespRaw = claveRespuesta ? respuestas[claveRespuesta] : '';\n  \n  // Normalizar texto del usuario (minúsculas y sin acentos)\n  const userResp = String(userRespRaw || '')\n    .toLowerCase()\n    .normalize(\"NFD\")\n    .replace(/[\\u0300-\\u036f]/g, \"\");\n\n  // Obtener la lista de keywords\n  const rawKw = datosPreguntas[`keywords_${i}`] || '';\n  const keywordsList = String(rawKw)\n    .split(',')\n    .map(k => k.trim().toLowerCase().normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\"))\n    .filter(k => k.length > 0);\n\n  // Evaluar coincidencia\n  const coincide = keywordsList.some(kw => userResp.includes(kw));\n  if (coincide) aciertos++;\n\n  detalles.push({\n    pregunta: i,\n    respuesta_recibida: userRespRaw,\n    keywords_buscadas: keywordsList,\n    es_correcta: coincide\n  });\n}\n\nreturn {\n  json: {\n    ...respuestas,\n    total_correctas: aciertos,\n    total_preguntas: 5,\n    detalles_evaluacion: detalles\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -1056
+      ],
+      "id": "24362b67-1591-4b59-bab1-1e045e179c62",
+      "name": "Calificar_Respuestas"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "15589e2c-487d-4bb3-891d-558253d31ca9",
+              "name": "lenguaje_programacion",
+              "value": "={{ \n  (() => {\n    // Intentar leer desde el body del Webhook en sus diferentes variantes posibles\n    const body = $('Webhook').first().json.body || {};\n    return body.lenguaje_programacion || body['Lenguaje de Programación'] || body['lenguaje'] || 'Python';\n  })()\n}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -672,
+        -1040
+      ],
+      "id": "0837e056-d002-4cda-bccc-1e1d60cf177f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.modalidad }}",
+                    "rightValue": "=Registrarse",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "b9f67a30-b84b-4c35-a1aa-48ad8524c965"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e2f16b8a-6173-40b2-80ac-a4720dfbb8c7",
+                    "leftValue": "={{ $json.modalidad }}",
+                    "rightValue": "=Anonimo",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.modalidad }}",
+                    "rightValue": "=Iniciar Sesion",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c1989dc5-decb-4d16-8b98-4efa1d5f457f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1456,
+        -1040
+      ],
+      "id": "a56615dc-cdaf-4309-97e0-a7f9fcf6bac7",
+      "name": "Switch Modalidad2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://yeaitgwbmxdhokismeyp.supabase.co/auth/v1/signup",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_publishable_FMMECO0_3Rw0OMk6HYzqDQ_oX5qLZap"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "email",
+              "value": "={{ $('Webhook').first().json.body['Correo Electrónico'] }}"
+            },
+            {
+              "name": "password",
+              "value": "={{ $('Webhook').first().json.body['Contraseña'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1168,
+        -1152
+      ],
+      "id": "fea71b5b-42f7-49aa-bde3-c44be7c4821d",
+      "name": "HTTP Request Supabase Auth"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://yeaitgwbmxdhokismeyp.supabase.co/auth/v1/token?grant_type=password",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_publishable_FMMECO0_3Rw0OMk6HYzqDQ_oX5qLZap"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"email\": \"{{ $('Webhook').first().json.body['Correo Electrónico'] }}\",\n  \"password\": \"{{ $('Webhook').first().json.body['Contraseña'] || $('Webhook').first().json.body['Password'] }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1056,
+        -928
+      ],
+      "id": "157e8440-f629-464b-943e-55999f3819cc",
+      "name": "HTTP Request Supabase Login"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Lenguaje de Programacion",
+              "fieldType": "dropdown",
+              "fieldName": "lenguaje_programacion",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Python"
+                  },
+                  {
+                    "option": "Java"
+                  },
+                  {
+                    "option": "JavaScript"
+                  },
+                  {
+                    "option": "C++"
+                  },
+                  {
+                    "option": "C#"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1152,
+        -1904
+      ],
+      "id": "79b82101-0d93-4cfc-b655-0d5eb9fefe44",
+      "name": "Form Language choice",
+      "webhookId": "bb1a502e-2850-4d68-9505-3275fa3a15e6"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Lenguaje de Programacion",
+              "fieldType": "dropdown",
+              "fieldName": "lenguaje_programacion",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Python"
+                  },
+                  {
+                    "option": "Java"
+                  },
+                  {
+                    "option": "JavaScript"
+                  },
+                  {
+                    "option": "C++"
+                  },
+                  {
+                    "option": "C#"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -576,
+        -1872
+      ],
+      "id": "84466164-1a3d-40e6-8b6e-bdf46accd681",
+      "name": "Form Language Choice Log",
+      "webhookId": "bb1a502e-2850-4d68-9505-3275fa3a15e6"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Lenguaje de Programacion",
+              "fieldType": "dropdown",
+              "fieldName": "lenguaje_programacion",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Python"
+                  },
+                  {
+                    "option": "Java"
+                  },
+                  {
+                    "option": "JavaScript"
+                  },
+                  {
+                    "option": "C++"
+                  },
+                  {
+                    "option": "C#"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Primer Nombre"
+            },
+            {
+              "fieldLabel": "Segundo nombre"
+            },
+            {
+              "fieldLabel": "Primer Apellido"
+            },
+            {
+              "fieldLabel": "Segundo Apellido"
+            },
+            {
+              "fieldLabel": "Correo Electrónico",
+              "fieldType": "email"
+            },
+            {
+              "fieldLabel": "Password",
+              "fieldType": "password"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -1056,
+        -1728
+      ],
+      "id": "c33277f8-8693-48cd-9cb0-5bdea1b8b598",
+      "name": "Form Register",
+      "webhookId": "bb1a502e-2850-4d68-9505-3275fa3a15e6"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Correo Electrónico",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Password",
+              "fieldType": "password",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -944,
+        -1920
+      ],
+      "id": "dd7201e8-dd6a-4fdf-9a5b-386f61b82a7e",
+      "name": "Form Login",
+      "webhookId": "form-login-webhook-id"
+    },
+    {
+      "parameters": {
+        "tableId": "Usuario",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "Primer_nombre",
+              "fieldValue": "={{ $('Webhook').first().json.body['Primer Nombre'] }}"
+            },
+            {
+              "fieldId": "Segundo_Nombre",
+              "fieldValue": "={{ $('Webhook').first().json.body['Segundo Nombre'] }}"
+            },
+            {
+              "fieldId": "Primer_apellido",
+              "fieldValue": "={{ $('Webhook').first().json.body['Primer Apellido'] }}"
+            },
+            {
+              "fieldId": "Segundo_apellido",
+              "fieldValue": "={{ $('Webhook').first().json.body['Segundo Apellido'] }}"
+            },
+            {
+              "fieldId": "Email",
+              "fieldValue": "={{ $('Webhook').first().json.body['Correo Electrónico'] }}"
+            },
+            {
+              "fieldId": "es_anonimo",
+              "fieldValue": "false"
+            },
+            {
+              "fieldId": "id",
+              "fieldValue": "={{ $json.user.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -1152
+      ],
+      "id": "ef756cac-5aa0-4cb4-9734-6d5124e18341",
+      "name": "Supabase Save User",
+      "credentials": {
+        "supabaseApi": {
+          "id": "11GkgcN7ACMUZrLN",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee2c6783-7c98-4114-82dd-675f4bf89cca",
+              "name": "Pregunta_1",
+              "value": "¿Qué es C++ y para qué tipo de aplicaciones se utiliza?",
+              "type": "string"
+            },
+            {
+              "id": "kw1",
+              "name": "keywords_1",
+              "value": "rendimiento,sistemas,juegos,compilado,bajo nivel,hardware",
+              "type": "string"
+            },
+            {
+              "id": "67f6b373-17a3-4d7a-abf9-b694d2c20978",
+              "name": "Pregunta_2",
+              "value": "¿Qué diferencia principal existe entre C y C++?",
+              "type": "string"
+            },
+            {
+              "id": "kw2",
+              "name": "keywords_2",
+              "value": "objetos,poo,clases,estructurado,extension",
+              "type": "string"
+            },
+            {
+              "id": "e78a9e94-3685-4fa0-8eb1-b4389bf238c0",
+              "name": "Pregunta_3",
+              "value": "¿Qué es una clase en C++?",
+              "type": "string"
+            },
+            {
+              "id": "kw3",
+              "name": "keywords_3",
+              "value": "molde,plantilla,encapsulamiento,metodos,atributos",
+              "type": "string"
+            },
+            {
+              "id": "9195b595-1bab-4a9e-8280-c5201c86036f",
+              "name": "Pregunta_4",
+              "value": "¿Por qué C++ es considerado un lenguaje de alto rendimiento?",
+              "type": "string"
+            },
+            {
+              "id": "kw4",
+              "name": "keywords_4",
+              "value": "punteros,memoria,compilado,directo,recursos,velocidad",
+              "type": "string"
+            },
+            {
+              "id": "d8ff3781-aaaa-445c-a998-ec43aa95687a",
+              "name": "Pregunta_5",
+              "value": "¿En qué proyectos puede ser conveniente utilizar C++?",
+              "type": "string"
+            },
+            {
+              "id": "kw5",
+              "name": "keywords_5",
+              "value": "motores,operativos,sistemas,embarcados,videojuegos,drivers",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -1232
+      ],
+      "id": "e0d039ca-8769-44d9-8444-4f24383fc3f0",
+      "name": "Questions_C++"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee2c6783-7c98-4114-82dd-675f4bf89cca",
+              "name": "Pregunta_1",
+              "value": "¿Qué es Java y para qué se utiliza principalmente?",
+              "type": "string"
+            },
+            {
+              "id": "kw1",
+              "name": "keywords_1",
+              "value": "orientado,objetos,multiplataforma,enterprise,backend,android",
+              "type": "string"
+            },
+            {
+              "id": "67f6b373-17a3-4d7a-abf9-b694d2c20978",
+              "name": "Pregunta_2",
+              "value": "¿Qué diferencia hay entre una clase y un objeto en Java?",
+              "type": "string"
+            },
+            {
+              "id": "kw2",
+              "name": "keywords_2",
+              "value": "plantilla,instancia,molde,entidad,memoria",
+              "type": "string"
+            },
+            {
+              "id": "e78a9e94-3685-4fa0-8eb1-b4389bf238c0",
+              "name": "Pregunta_3",
+              "value": "¿Qué significa que Java sea multiplataforma?",
+              "type": "string"
+            },
+            {
+              "id": "kw3",
+              "name": "keywords_3",
+              "value": "jvm,maquina,virtual,bytecode,so,sistema",
+              "type": "string"
+            },
+            {
+              "id": "9195b595-1bab-4a9e-8280-c5201c86036f",
+              "name": "Pregunta_4",
+              "value": "¿Para qué sirve el método main() en Java?",
+              "type": "string"
+            },
+            {
+              "id": "kw4",
+              "name": "keywords_4",
+              "value": "punto,entrada,inicio,ejecucion,principal",
+              "type": "string"
+            },
+            {
+              "id": "d8ff3781-aaaa-445c-a998-ec43aa95687a",
+              "name": "Pregunta_5",
+              "value": "¿Qué ventajas tiene Java para desarrollar aplicaciones?",
+              "type": "string"
+            },
+            {
+              "id": "kw5",
+              "name": "keywords_5",
+              "value": "portabilidad,seguridad,comunidad,robusto,ecosistema",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -1072
+      ],
+      "id": "c032be9c-7b60-499d-aa70-6f489a7d8ee2",
+      "name": "Questions_Java"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee2c6783-7c98-4114-82dd-675f4bf89cca",
+              "name": "Pregunta_1",
+              "value": "¿Qué es Python y por qué es considerado fácil de aprender?",
+              "type": "string"
+            },
+            {
+              "id": "kw1",
+              "name": "keywords_1",
+              "value": "sintaxis,sencill,legib,fácil,facil,limpia,interpretad",
+              "type": "string"
+            },
+            {
+              "id": "67f6b373-17a3-4d7a-abf9-b694d2c20978",
+              "name": "Pregunta_2",
+              "value": "¿Para qué se utilizan las listas en Python?",
+              "type": "string"
+            },
+            {
+              "id": "kw2",
+              "name": "keywords_2",
+              "value": "elementos,coleccion,guardar,almacenar,secuencia,datos",
+              "type": "string"
+            },
+            {
+              "id": "e78a9e94-3685-4fa0-8eb1-b4389bf238c0",
+              "name": "Pregunta_3",
+              "value": "¿Qué diferencia existe entre una variable y una función en Python?",
+              "type": "string"
+            },
+            {
+              "id": "kw3",
+              "name": "keywords_3",
+              "value": "almacena,bloque,codigo,reutiliz,ejecutar,def",
+              "type": "string"
+            },
+            {
+              "id": "9195b595-1bab-4a9e-8280-c5201c86036f",
+              "name": "Pregunta_4",
+              "value": "¿En qué áreas se utiliza principalmente Python?",
+              "type": "string"
+            },
+            {
+              "id": "kw4",
+              "name": "keywords_4",
+              "value": "datos,ia,inteligencia,web,automatiz,backend",
+              "type": "string"
+            },
+            {
+              "id": "d8ff3781-aaaa-445c-a998-ec43aa95687a",
+              "name": "Pregunta_5",
+              "value": "¿Qué ventajas tiene Python frente a otros lenguajes?",
+              "type": "string"
+            },
+            {
+              "id": "kw5",
+              "name": "keywords_5",
+              "value": "comunidad,librerias,multiplataforma,rapido,versatil",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -896
+      ],
+      "id": "39d0b537-58a8-43e4-94bd-bdde8b9cc538",
+      "name": "Questions_Python"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee2c6783-7c98-4114-82dd-675f4bf89cca",
+              "name": "Pregunta_1",
+              "value": "¿Qué es JavaScript y cuál es su función en una página web?",
+              "type": "string"
+            },
+            {
+              "id": "kw1",
+              "name": "keywords_1",
+              "value": "interactiv,dinamism,cliente,navegador,dom,script",
+              "type": "string"
+            },
+            {
+              "id": "67f6b373-17a3-4d7a-abf9-b694d2c20978",
+              "name": "Pregunta_2",
+              "value": "¿Qué diferencia existe entre JavaScript y HTML?",
+              "type": "string"
+            },
+            {
+              "id": "kw2",
+              "name": "keywords_2",
+              "value": "estructura,marcado,programacion,dinamico,estatico,comportamiento",
+              "type": "string"
+            },
+            {
+              "id": "e78a9e94-3685-4fa0-8eb1-b4389bf238c0",
+              "name": "Pregunta_3",
+              "value": "¿Para qué se utilizan las funciones en JavaScript?",
+              "type": "string"
+            },
+            {
+              "id": "kw3",
+              "name": "keywords_3",
+              "value": "reutiliz,bloque,ejecutar,tarea,metodo,retornar",
+              "type": "string"
+            },
+            {
+              "id": "9195b595-1bab-4a9e-8280-c5201c86036f",
+              "name": "Pregunta_4",
+              "value": "¿Qué tipo de aplicaciones se pueden desarrollar con JavaScript?",
+              "type": "string"
+            },
+            {
+              "id": "kw4",
+              "name": "keywords_4",
+              "value": "web,mobile,backend,node,servidor,movil",
+              "type": "string"
+            },
+            {
+              "id": "d8ff3781-aaaa-445c-a998-ec43aa95687a",
+              "name": "Pregunta_5",
+              "value": "¿Por qué JavaScript es importante en el desarrollo web?",
+              "type": "string"
+            },
+            {
+              "id": "kw5",
+              "name": "keywords_5",
+              "value": "estandar,navegadores,popular,fullstack,ecosistema",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -752
+      ],
+      "id": "c79073da-c744-4c6a-abd9-ca6e83f669ff",
+      "name": "Questions_JavaScript"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "={{ $json.Pregunta_1 }}",
+              "fieldName": "respuesta_1"
+            },
+            {
+              "fieldLabel": "={{ $json.Pregunta_2 }}",
+              "fieldName": "respuesta_2"
+            },
+            {
+              "fieldLabel": "={{ $json.Pregunta_3 }}",
+              "fieldName": "respuesta_3"
+            },
+            {
+              "fieldLabel": "={{ $json.Pregunta_4 }}",
+              "fieldName": "Respuesta_4"
+            },
+            {
+              "fieldLabel": "={{ $json.Pregunta_5 }}",
+              "fieldName": "respuesta_5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        -864,
+        -1664
+      ],
+      "id": "c0399301-0c67-4944-bd7b-cf02535ce368",
+      "name": "Answers",
+      "webhookId": "0eaf0135-2ddc-4a4e-8138-dab7850c59bf"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "encuesta-inicio",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1792,
+        -1024
+      ],
+      "id": "31c65abc-14c3-48b1-84e6-07f06b47cf77",
+      "name": "Webhook",
+      "webhookId": "4454ce43-1416-49d3-98d9-0be5c605bf5c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d4a2714a-66fc-49d8-a41c-887ff85f6c24",
+              "name": "modalidad",
+              "value": "={{ $json.body?.[\"¿Cómo deseas ingresar a la encuesta?\"] || $json.body?.modalidad || \"Anonimo\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -1616,
+        -1024
+      ],
+      "id": "0e90aa0f-7489-4c97-966f-f909d22afab2",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee2c6783-7c98-4114-82dd-675f4bf89cca",
+              "name": "Pregunta_1",
+              "value": "¿Qué es C# y para qué se utiliza principalmente?",
+              "type": "string"
+            },
+            {
+              "id": "kw1",
+              "name": "keywords_1",
+              "value": "microsoft,net,objetos,backend,videojuegos,unity",
+              "type": "string"
+            },
+            {
+              "id": "67f6b373-17a3-4d7a-abf9-b694d2c20978",
+              "name": "Pregunta_2",
+              "value": "¿Qué relación tiene C# con la plataforma .NET?",
+              "type": "string"
+            },
+            {
+              "id": "kw2",
+              "name": "keywords_2",
+              "value": "framework,runtime,entorno,librerias,ejecucion",
+              "type": "string"
+            },
+            {
+              "id": "e78a9e94-3685-4fa0-8eb1-b4389bf238c0",
+              "name": "Pregunta_3",
+              "value": "¿Qué es una clase en C#?",
+              "type": "string"
+            },
+            {
+              "id": "kw3",
+              "name": "keywords_3",
+              "value": "plantilla,molde,atributos,metodos,objeto,estructura",
+              "type": "string"
+            },
+            {
+              "id": "9195b595-1bab-4a9e-8280-c5201c86036f",
+              "name": "Pregunta_4",
+              "value": "¿Por qué C# es utilizado para desarrollar videojuegos?",
+              "type": "string"
+            },
+            {
+              "id": "kw4",
+              "name": "keywords_4",
+              "value": "unity,motor,engine,rendimiento,multiplataforma",
+              "type": "string"
+            },
+            {
+              "id": "d8ff3781-aaaa-445c-a998-ec43aa95687a",
+              "name": "Pregunta_5",
+              "value": "¿Qué ventajas ofrece C# para crear aplicaciones?",
+              "type": "string"
+            },
+            {
+              "id": "kw5",
+              "name": "keywords_5",
+              "value": "seguridad,tipado,comunidad,soporte,robusto,eficiente",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -1392
+      ],
+      "id": "e53dc151-a637-4340-865b-2d2198188baa",
+      "name": "Questions_C#"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "rQwXRdHRWAO5yvwj",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/rQwXRdHRWAO5yvwj",
+          "cachedResultName": "Subworkflow_Feedback"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        -1120
+      ],
+      "id": "d0f12bbd-28df-4f2c-9e28-a9acf8a5581f",
+      "name": "Call 'Subworkflow_Feedback'"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch2": {
+      "main": [
+        [
+          {
+            "node": "Questions_C#",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Questions_C++",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Questions_Java",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Questions_Python",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Questions_JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Satisfaccion": {
+      "main": [
+        [
+          {
+            "node": "Supabase (Guardar Respuesta)1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar motivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulario de mejora": {
+      "main": [
+        []
+      ]
+    },
+    "Inicio": {
+      "main": [
+        []
+      ]
+    },
+    "Consolidar_Respuestas": {
+      "main": [
+        [
+          {
+            "node": "Calificar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form3": {
+      "main": [
+        []
+      ]
+    },
+    "Form4": {
+      "main": [
+        []
+      ]
+    },
+    "Guardar motivo": {
+      "main": [
+        [
+          {
+            "node": "Supabase (Guardar Respuesta)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase (Guardar Respuesta)1": {
+      "main": [
+        [
+          {
+            "node": "Call 'Subworkflow_Feedback'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calificar_Respuestas": {
+      "main": [
+        [
+          {
+            "node": "If Satisfaccion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Switch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Modalidad2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Supabase Auth",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request Supabase Login",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Supabase Auth": {
+      "main": [
+        [
+          {
+            "node": "Supabase Save User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Supabase Login": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Language choice": {
+      "main": [
+        []
+      ]
+    },
+    "Form Language Choice Log": {
+      "main": [
+        []
+      ]
+    },
+    "Form Register": {
+      "main": [
+        []
+      ]
+    },
+    "Form Login": {
+      "main": [
+        []
+      ]
+    },
+    "Supabase Save User": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions_C++": {
+      "main": [
+        [
+          {
+            "node": "Consolidar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions_Java": {
+      "main": [
+        [
+          {
+            "node": "Consolidar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions_Python": {
+      "main": [
+        [
+          {
+            "node": "Consolidar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions_JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Consolidar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answers": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch Modalidad2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions_C#": {
+      "main": [
+        [
+          {
+            "node": "Consolidar_Respuestas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "0ef5667f-bd7a-4968-93a5-bf56e724ee2e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5a642d4c55f722046798642153f9247e5eb31e7c23c15ce2aff6f6d960dd1794"
+  },
+  "nodeGroups": [],
+  "id": "pVsFdLpen8rqtulh",
+  "tags": []
+}

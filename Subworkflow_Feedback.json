@@ -1,0 +1,96 @@
+{
+  "name": "Subworkflow_Feedback",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -80
+      ],
+      "id": "bfec8367-2a42-492f-be06-d3de8fb1332b",
+      "name": "Execute Workflow Trigger"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const entrada = $input.item.json;\nconst aciertos = entrada.total_correctas || 0;\n\nlet mensaje = \"\";\nif (aciertos === 5) {\n  mensaje = \"¡Excelente trabajo! Dominas perfectamente los conceptos clave del lenguaje.\";\n} else if (aciertos >= 3) {\n  mensaje = \"Buen trabajo, tienes buenas bases pero te recomiendo repasar algunos detalles técnicos.\";\n} else {\n  mensaje = \"Es necesario reforzar los fundamentos teóricos y prácticos de este lenguaje.\";\n}\n\nreturn {\n  json: {\n    ...entrada,\n    retroalimentacion_ia: mensaje\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -80
+      ],
+      "id": "64634bf4-eda1-45a2-8795-13092bdc02cd",
+      "name": "Generar_Retroalimentacion"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "respuestas_encuesta",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "retroalimentacion_ia",
+              "fieldValue": "={{ $json.retroalimentacion_ia }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        448,
+        -80
+      ],
+      "id": "c91611a5-c2ed-4d5b-b9cb-13d60847db76",
+      "name": "Supabase (Actualizar Retroalimentacion)",
+      "credentials": {
+        "supabaseApi": {
+          "id": "11GkgcN7ACMUZrLN",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Generar_Retroalimentacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar_Retroalimentacion": {
+      "main": [
+        [
+          {
+            "node": "Supabase (Actualizar Retroalimentacion)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "fbaf2d84-daab-455e-82a0-337784a8e8e3",
+  "meta": {
+    "instanceId": "5a642d4c55f722046798642153f9247e5eb31e7c23c15ce2aff6f6d960dd1794"
+  },
+  "nodeGroups": [],
+  "id": "rQwXRdHRWAO5yvwj",
+  "tags": []
+}
